@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Guest;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Post;
 
 class HomeController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
+    public function index () {
         return view('guest.home');
     }
 }

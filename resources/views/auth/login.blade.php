@@ -70,4 +70,29 @@
         </div>
     </div>
 </div>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Enter as guest') }}</div>
+
+                <div class="card-body">
+                    <form method="post" action="{{ route('guest.home') }}">
+                        @csrf
+                        @method('POST')
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <button type="submit" class="btn btn-danger">
+                                    {{ __('Enter as guest') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -15,17 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'LoginController@login');
 
-// Route::get('/blog', 'PostController@index')->name('blog');
-
-// Route::get('/blog/{slug}', 'PostController@show')->name('post');
+Route::post('/guest', 'Guest\HomeController@index');
 
 Route::prefix('guest')
     ->namespace('Guest')
     ->name('guest.')
     ->group(function () {
-        Route::view('/', 'HomeController@index')->name('blog');
+        Route::get('/', 'HomeController@index')->name('home');
         Route::resource('posts', 'PostController');
     });
 

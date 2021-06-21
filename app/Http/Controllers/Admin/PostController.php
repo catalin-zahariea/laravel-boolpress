@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Str;
+use Illuminate\Support\MessageBag;
 
 class PostController extends Controller
 {
@@ -15,7 +17,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+
+        $data = [
+            'posts' => $posts
+        ];
+
+        return view('admin.posts.index', $data);
     }
 
     /**
@@ -25,7 +33,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -36,7 +44,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        $post = new Post();
+        $form_data = $request->all();
+        
+        $new_slug = Str::slug($form_data['title'], '-');
+        $base_slug = $new_slug;
+
+        $existing_slug = Post::where('slug', '=', $new_slug)->first();
+        $counter = 1;
+
+        while($existing_slug) {
+            $new_slug = $base_slug . '-' . $counter;
+            $counter++;
+            $existing_slug = Post::where('slug', '=', $new_slug)->first();
+        }
+
+        $form_data['slug'] = $new_slug;
+
+        $post->fill($form_data);
+        $post->save();
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -47,7 +80,13 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $data = [
+            'post' => $post
+        ];
+
+        return view('admin.posts.show', $data);
     }
 
     /**
@@ -58,7 +97,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $data = [
+            'post' => $post
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -70,7 +115,33 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        $post = Post::findOrFail($id);
+        $form_data = $request->all();
+        
+        if($form_data['title'] != $post->title) {
+            $new_slug = Str::slug($form_data['title'], '-');
+            $base_slug = $new_slug;
+
+            $existing_slug = Post::where('slug', '=', $new_slug)->first();
+            $counter = 1;
+
+            while($existing_slug) {
+                $new_slug = $base_slug . '-' . $counter;
+                $counter++;
+                $existing_slug = Post::where('slug', '=', $new_slug)->first();
+            }
+
+            $form_data['slug'] = $new_slug;
+        }
+
+        $post->update($form_data);
+
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -81,6 +152,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->delete();
+
+        return redirect()->route('admin.posts.index');
     }
 }

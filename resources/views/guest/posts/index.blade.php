@@ -5,7 +5,7 @@
     
     <div class="p-5">
 
-        <h1>Ecco la nostra lista di posts:</h1>
+        <h1 class="m-1">Ecco la nostra lista di posts:</h1>
 
         <div class="d-flex flex-wrap">
             @foreach ($posts as $post)
@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ucfirst($post->title)}}</h5>
                         <p class="card-text">{{substr($post->content, 0, 80)}}..</p>
-                        <a class="btn btn-success" href="{{route('post', ['slug' => $post->slug])}}" class="card-link">Read more</a>
+                        <a class="btn btn-success" href="{{route('guest.posts.show', ['post' => $post->slug])}}" class="card-link">Read more</a>
                     </div>
                 </div>
             @endforeach

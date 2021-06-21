@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Ecco la nostra lista di posts:</h1>
-    <a class="btn btn-primary" href="{{route('blog')}}">Il nostro blog</a>
+    <div class="p-5">
+        <div class="card" style="width: 100%">
+            <img src="https://picsum.photos/1920/300" class="card-img-top" alt="Jumbotron">
+            <div class="card-body">
+              <h1 class="card-title">Boolpress</h1>
+              <p class="card-text">A wordpress example website built using Laravel.</p>
+              <a href="{{route('guest.posts.index')}}" class="btn btn-primary">Read our blog posts</a>
+            </div>
+          </div>
+    </div>
 @endsection
