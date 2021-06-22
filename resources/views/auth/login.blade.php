@@ -77,19 +77,8 @@
             <div class="card">
                 <div class="card-header">{{ __('Enter as guest') }}</div>
 
-                <div class="card-body">
-                    <form method="post" action="{{ route('guest.home') }}">
-                        @csrf
-                        @method('POST')
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-danger">
-                                    {{ __('Enter as guest') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="card-body text-center">
+                    <a class="btn btn-danger" href="{{route('home')}}">Entra come guest</a>
                 </div>
             </div>
         </div>

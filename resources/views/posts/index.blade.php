@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ucfirst($post->title)}}</h5>
                         <p class="card-text">{{substr($post->content, 0, 80)}}..</p>
-                        <a class="btn btn-success" href="{{route('guest.posts.show', ['post' => $post->slug])}}" class="card-link">Read more</a>
+                        <a class="btn btn-success" href="{{route('guest.show', ['slug' => $post->slug])}}" class="card-link">Read more</a>
                     </div>
                 </div>
             @endforeach

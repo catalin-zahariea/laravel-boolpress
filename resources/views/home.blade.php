@@ -7,7 +7,7 @@
             <div class="card-body">
               <h1 class="card-title">Boolpress</h1>
               <p class="card-text">A wordpress example website built using Laravel.</p>
-              <a href="{{route('guest.posts.index')}}" class="btn btn-primary">Read our blog posts</a>
+              <a href="{{route('guest.index')}}" class="btn btn-primary">Read our blog posts</a>
             </div>
           </div>
     </div>

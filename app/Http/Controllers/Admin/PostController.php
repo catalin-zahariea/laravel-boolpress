@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use App\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\MessageBag;
 
@@ -18,9 +19,11 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $categories = Category::all();
 
         $data = [
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $categories
         ];
 
         return view('admin.posts.index', $data);
@@ -33,7 +36,16 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+
+        $post = new Post();
+        $categories = Category::all();
+
+        $data = [
+            'post' => $post,
+            'categories' => $categories
+        ];
+
+        return view('admin.posts.create', $data);
     }
 
     /**
@@ -47,6 +59,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         $post = new Post();
@@ -83,7 +96,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
 
         $data = [
-            'post' => $post
+            'post' => $post,
+            'post_category' => $post->category
         ];
 
         return view('admin.posts.show', $data);
@@ -98,9 +112,11 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+        $categories = Category::all();
 
         $data = [
-            'post' => $post
+            'post' => $post,
+            'categories' => $categories
         ];
 
         return view('admin.posts.edit', $data);
@@ -118,6 +134,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         $post = Post::findOrFail($id);
