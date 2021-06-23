@@ -5,7 +5,11 @@
     
     <div class="p-5">
 
-        <h1 class="m-1">Ecco la nostra lista di posts:</h1>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-4">Our blog posts</h1>
+            </div>
+        </div>
 
         <div class="d-flex flex-wrap">
             @foreach ($posts as $post)

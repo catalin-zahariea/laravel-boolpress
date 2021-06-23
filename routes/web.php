@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Category;
+use App\Post;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +20,17 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('posts', 'PostController@index')->name('guest.index');
+Route::get('/posts', 'PostController@index')->name('guest.index');
 
-Route::get('posts/{slug}', 'PostController@show')->name('guest.show');
+Route::get('/posts/{slug}', 'PostController@show')->name('guest.show');
+
+Route::prefix('categories')
+    ->namespace('Categories')
+    ->name('categories.')
+    ->group(function() {
+        Route::get('categories', 'CategoriesController@index')->name('index');
+        Route::get('categories/{id}', 'CategoriesController@show')->name('show');
+    });
 
 Route::prefix('admin')
     ->namespace('Admin')
