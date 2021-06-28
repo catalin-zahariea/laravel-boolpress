@@ -27,11 +27,19 @@
                 <div class="card mb-5" style="width: 30rem">
                     <div class="card-body">
                         <h5 class="card-title">{{ucfirst($post->title)}}</h5>
-                        <p class="card-text">{{substr($post->content, 0, 80)}}..</p>
+                        <p class="card-text"><strong>Slug: </strong>{{$post->slug}}</p>
                         @if ($post->category)
                             <p class="card-text"><strong>Category: </strong>{{$post->category['name']}}</p>
                         @endif
-                        <p class="card-text"><strong>Slug: </strong>{{$post->slug}}</p>
+                        @if ($post->tags)
+                        <p class="card-text"><strong>Tags: </strong>
+                            @foreach ($post->tags as $tag)
+                                {{$tag->name}}{{$loop->last ? '' : ', '}}
+                            @endforeach
+                        </p>
+                        @endif
+
+                        <p class="card-text">{{substr($post->content, 0, 80)}}..</p>
                         <a class="btn btn-success" href="{{route('admin.posts.show', ['post' => $post->id])}}" class="card-link">Read more</a>
                         <a class="btn btn-secondary" href="{{route('admin.posts.edit', ['post' => $post->id])}}" class="card-link">Modify post</a>
                         <form class="d-inline-block" action="{{route('admin.posts.destroy', ['post' => $post->id])}}" method="post">

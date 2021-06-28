@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -17,9 +18,13 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('posts.index', $data);
@@ -40,7 +45,9 @@ class PostController extends Controller
         };
 
         $data = [
-            'post' => $post
+            'post' => $post,
+            'post_category' => $post->category,
+            'post_tags' => $post->tags
         ];
 
         return view('posts.show', $data);

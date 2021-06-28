@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Post;
-use App\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\MessageBag;
+use App\Post;
+use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -19,11 +20,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        $categories = Category::all();
 
         $data = [
-            'posts' => $posts,
-            'categories' => $categories
+            'posts' => $posts
         ];
 
         return view('admin.posts.index', $data);
@@ -39,10 +38,12 @@ class PostController extends Controller
 
         $post = new Post();
         $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
             'post' => $post,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.create', $data);
@@ -59,13 +60,13 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ]);
 
-        $post = new Post();
-        $form_data = $request->all();
+        $new_post_data = $request->all();
         
-        $new_slug = Str::slug($form_data['title'], '-');
+        $new_slug = Str::slug($new_post_data['title'], '-');
         $base_slug = $new_slug;
 
         $existing_slug = Post::where('slug', '=', $new_slug)->first();
@@ -77,12 +78,17 @@ class PostController extends Controller
             $existing_slug = Post::where('slug', '=', $new_slug)->first();
         }
 
-        $form_data['slug'] = $new_slug;
+        $new_post_data['slug'] = $new_slug;
 
-        $post->fill($form_data);
-        $post->save();
+        $new_post = new Post();
+        $new_post->fill($new_post_data);
+        $new_post->save();
 
-        return redirect()->route('admin.posts.index');
+        if(isset($new_post_data['tags']) && is_array($new_post_data['tags'])) {
+            $new_post->tags()->sync($new_post_data['tags']);
+        }
+
+        return redirect()->route('admin.posts.show', ['post' => $new_post->id]);
     }
 
     /**
@@ -97,7 +103,8 @@ class PostController extends Controller
 
         $data = [
             'post' => $post,
-            'post_category' => $post->category
+            'post_category' => $post->category,
+            'post_tags' => $post->tags
         ];
 
         return view('admin.posts.show', $data);
@@ -113,10 +120,12 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
             'post' => $post,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.edit', $data);
@@ -134,14 +143,15 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ]);
 
-        $post = Post::findOrFail($id);
-        $form_data = $request->all();
+        $update_post = Post::findOrFail($id);
+        $update_post_data = $request->all();
         
-        if($form_data['title'] != $post->title) {
-            $new_slug = Str::slug($form_data['title'], '-');
+        if($update_post_data['title'] != $update_post->title) {
+            $new_slug = Str::slug($update_post_data['title'], '-');
             $base_slug = $new_slug;
 
             $existing_slug = Post::where('slug', '=', $new_slug)->first();
@@ -153,12 +163,15 @@ class PostController extends Controller
                 $existing_slug = Post::where('slug', '=', $new_slug)->first();
             }
 
-            $form_data['slug'] = $new_slug;
+            $update_post_data['slug'] = $new_slug;
         }
 
-        $post->update($form_data);
+        $update_post->update($update_post_data);
+        if(isset($update_post_data['tags']) && is_array($update_post_data['tags'])) {
+            $update_post->tags()->sync($update_post_data['tags']);
+        }
 
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.show' , ['post' => $update_post->id]);
     }
 
     /**

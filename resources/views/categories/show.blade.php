@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        @if (count($posts) > 0)
+        @if ($posts->isNotEmpty())
             <div class="card mt-5">
                 <div class="card-header">
                     {{$category->name}}

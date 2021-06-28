@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Post;
+use App\Tag;
 
 class CategoriesController extends Controller
 {

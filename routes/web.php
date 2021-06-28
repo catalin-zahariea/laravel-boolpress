@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Category;
-use App\Post;
 
 
 /*
@@ -30,6 +28,14 @@ Route::prefix('categories')
     ->group(function() {
         Route::get('categories', 'CategoriesController@index')->name('index');
         Route::get('categories/{id}', 'CategoriesController@show')->name('show');
+    });
+
+    Route::prefix('tags')
+    ->namespace('Tags')
+    ->name('tags.')
+    ->group(function() {
+        Route::get('tags', 'TagsController@index')->name('index');
+        Route::get('tags/{id}', 'TagsController@show')->name('show');
     });
 
 Route::prefix('admin')
