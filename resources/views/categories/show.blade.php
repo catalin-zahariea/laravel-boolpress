@@ -18,13 +18,7 @@
                 </div>
                 <div class="card-body d-flex flex-wrap justify-content-between">
                     @foreach ($posts as $post)
-                        <div class="card" style="width: 30rem">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ucfirst($post->title)}}</h5>
-                                <p class="card-text">{{substr($post->content, 0, 80)}}..</p>
-                                <a class="btn btn-success" href="{{route('guest.show', ['slug' => $post->slug])}}" class="card-link">Read more</a>
-                            </div>
-                        </div>
+                        @include('layouts.partials.card')
                     @endforeach
                 </div>
             </div>

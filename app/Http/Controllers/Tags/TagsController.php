@@ -21,8 +21,8 @@ class TagsController extends Controller
         return view('tags.index', $data);
     }
 
-    public function show($id) {
-        $tag = Tag::findOrFail($id);
+    public function show($slug) {
+        $tag = Tag::where('slug' , '=' , $slug)->first();
         $posts = $tag->posts;
 
         $data = [

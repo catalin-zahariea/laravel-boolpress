@@ -22,9 +22,9 @@ class CategoriesController extends Controller
         return view('categories.index', $data);
     }
 
-    public function show($id) {
-        $category = Category::findOrFail($id);
-        $posts = Post::all()->where('category_id', '=', $id);
+    public function show($slug) {
+        $category = Category::where('slug' , '=' , $slug)->first();
+        $posts = $category->posts;
 
         $data = [
             'category' => $category,
