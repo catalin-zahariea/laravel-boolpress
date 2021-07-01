@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{route('admin.posts.store')}}" method="post">
+    <form action="{{route('admin.posts.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('POST')
 
@@ -45,6 +45,16 @@
             @endforeach
         </div>
         {{-- END TAGS --}}
+
+        {{-- COVER --}}
+        <div>Cover image:</div>
+        <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" name="cover-image" class="custom-file-input" id="inputGroupFile02">
+              <label class="custom-file-label" for="cover-image" aria-describedby="inputGroupFileAddon02">Choose file</label>
+            </div>
+        </div>
+        {{-- END COVER --}}
     
         {{-- CONTENT --}}
         <div class="form-group">

@@ -11,13 +11,18 @@
     <div class="card-body">
         <div class="card mt-3" style="width: 100%;">
             <div class="card-body">
+                @if ($post->cover)
+                    <img src="{{asset('storage/' . $post->cover)}}" class="card-img-top mb-2" alt="{{ucfirst($post->title)}}">
+                @else
+                    <img src="https://picsum.photos/1080/720" class="card-img-top mb-2" alt="{{ucfirst($post->title)}}">
+                @endif
                 <h5 class="card-title">{{ucfirst($post->title)}}</h5>
                 @if (isset($post->category_id))
-                    <h6 class="card-subtitle mb-2 text-muted">Category - <a href="{{route('categories.show', ['id' => $post->category_id])}}">{{$post->category->name}}</a></h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Category - <a href="{{route('categories.show', ['slug' => $post->category->slug])}}">{{$post->category->name}}</a></h6>
                 @endif
                 <p class="card-subtitle mb-2 text-muted">Tags:
                     @foreach ($post->tags as $item_tag)
-                        <a href="{{route('tags.show', ['id' => $item_tag->id])}}">{{$item_tag->name}}</a>{{$loop->last ? '' : ', '}}
+                        <a href="{{route('tags.show', ['slug' => $item_tag->slug])}}">{{$item_tag->name}}</a>{{$loop->last ? '' : ', '}}
                     @endforeach
                 </p>
                 <p class="card-text">{{$post->content}}</p>

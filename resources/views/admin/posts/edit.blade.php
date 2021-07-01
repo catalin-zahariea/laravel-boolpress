@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="post">
+    <form action="{{route('admin.posts.update', ['post' => $post->id])}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -44,6 +44,21 @@
             @endforeach
         </div>
         {{-- END TAGS --}}
+
+        {{-- COVER --}}
+        <div>Cover image:</div>
+        <div class="input-group mb-3">
+            <div class="custom-file">
+              <input type="file" name="cover-image" class="custom-file-input" id="inputGroupFile02">
+              <label class="custom-file-label" for="cover-image" aria-describedby="inputGroupFileAddon02">Choose file</label>
+            </div>
+        </div>
+
+        <div>Current cover preview:</div>
+        @if ($post->cover)
+            <img src="{{asset('storage/' . $post->cover)}}" class="card-img-top" alt="{{ucfirst($post->title)}}">
+        @endif
+        {{-- END COVER --}}
 
         {{-- CONTENT --}}
         <div class="form-group">
