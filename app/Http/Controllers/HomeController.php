@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactsAutoreply;
 use App\Mail\NewContactAdminNotification;
+use App\Lead;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,12 @@ class HomeController extends Controller
 
         $form_data = $request->all();
 
+        if(isset($form_data['marketing-conditions'])) {
+            $new_lead = new Lead();
+            $new_lead->fill($form_data);
+            $new_lead->save();
+        }
+
         $data = [
             'form_data' => $form_data
         ];
@@ -40,5 +47,13 @@ class HomeController extends Controller
 
     public function newContactGreeting() {
         return view ('contacts.new-contact-greeting');
+    }
+
+    public function termsAndConditions() {
+        return view('terms-and-conditions');
+    }
+
+    public function marketingConditions() {
+        return view('marketing-conditions');
     }
 }

@@ -18,6 +18,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('/terms-and-conditions', 'HomeController@termsAndConditions')->name('terms-and-conditions');
+
+Route::get('/marketing-conditions', 'HomeController@marketingConditions')->name('marketing-conditions');
+
 Route::prefix('contacts')
     ->name('contacts.')
     ->group(function() {

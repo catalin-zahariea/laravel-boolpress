@@ -44,14 +44,25 @@
         </div>
         {{-- END MESSAGE --}}
     
-        {{-- TERMS & CONDITIONS WITH SEND BTN --}}
+        {{-- TERMS & CONDITIONS | MARKETING CONDITIONS \ SEND BTN --}}
         <div class="d-flex justify-content-between align-items-center">
-            {{-- TERMS & CONDITIONS --}}
-            <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="terms-and-conditions" id="terms-and-conditions" value="true">
-                <label class="custom-control-label" for="terms-and-conditions">Terms & Conditions</label>
+            <div>
+                <div class="d-flex align-items-center">
+                    {{-- TERMS & CONDITIONS --}}
+                    <div class="custom-control custom-switch mr-5">
+                        <input type="checkbox" class="custom-control-input" name="terms-and-conditions" id="terms-and-conditions" value="true">
+                        <label class="custom-control-label" for="terms-and-conditions"><a href="{{route('terms-and-conditions')}}">Terms & Conditions</a></label>
+                    </div>
+                    {{-- END TERMS & CONDITIONS --}}
+
+                    {{-- MARKETING CONDITIONS --}}
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" name="marketing-conditions" id="marketing-conditions" value="true">
+                        <label class="custom-control-label" for="marketing-conditions"><a href="{{route('marketing-conditions')}}">Marketing Conditions</a></label>
+                    </div>
+                    {{-- END MARKETING CONDITIONS --}}
+                </div>
             </div>
-            {{-- END TERMS & CONDITIONS --}}
 
             {{-- SEND BTN --}}
             <input class="btn btn-success" type="submit" value="Send">
