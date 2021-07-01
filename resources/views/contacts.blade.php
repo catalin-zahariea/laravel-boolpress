@@ -44,15 +44,18 @@
         </div>
         {{-- END MESSAGE --}}
     
+        {{-- TERMS & CONDITIONS WITH SEND BTN --}}
         <div class="d-flex justify-content-between align-items-center">
             {{-- TERMS & CONDITIONS --}}
             <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="terms-and-conditions" value="true">
+                <input type="checkbox" class="custom-control-input" name="terms-and-conditions" id="terms-and-conditions" value="true">
                 <label class="custom-control-label" for="terms-and-conditions">Terms & Conditions</label>
             </div>
             {{-- END TERMS & CONDITIONS --}}
 
+            {{-- SEND BTN --}}
             <input class="btn btn-success" type="submit" value="Send">
+            {{-- END SEND BTN --}}
         </div>
     </form>
 </div>
