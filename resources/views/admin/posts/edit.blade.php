@@ -36,11 +36,15 @@
 
         {{-- TAGS --}}
         <div>Tags:</div>
-        <div class="btn-group btn-group-toggle mt-2 mb-2" data-toggle="button">
+        <div class="form-check form-check-inline">
             @foreach ($tags as $tag)
-                <label class="btn btn-primary">
-                    <input type="checkbox" name="tags[]" id="{{$tag->id}}" value="{{$tag->id}}" {{in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>{{$tag->name}}
-                </label>
+                @if ($errors->any())
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tag-{{$tag->id}}" value="{{$tag->id}}" {{in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                    <label class="form-check-label mr-5" for="tags[]">{{$tag->name}}</label>
+                @else
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tag-{{$tag->id}}" value="{{$tag->id}}" {{$post->tags->contains($tag->id) ? 'checked' : '' }}>
+                    <label class="form-check-label mr-5" for="tags[]">{{$tag->name}}</label>
+                @endif               
             @endforeach
         </div>
         {{-- END TAGS --}}

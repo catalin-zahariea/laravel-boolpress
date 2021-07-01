@@ -193,6 +193,8 @@ class PostController extends Controller
 
         if(isset($update_post_data['tags']) && is_array($update_post_data['tags'])) {
             $update_post->tags()->sync($update_post_data['tags']);
+        } else {
+            $update_post->tags()->sync([]);
         }
 
         return redirect()->route('admin.posts.show' , ['post' => $update_post->id]);
@@ -206,8 +208,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::find($id);
-
+        $post = Post::findOrFail($id);
+        $post->tags()->sync([]);
         $post->delete();
 
         return redirect()->route('admin.posts.index');

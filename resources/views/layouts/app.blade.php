@@ -9,6 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    @yield('header-scripts')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -53,6 +55,10 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('vue-post') }}">Vue Posts</a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contacts.form') }}">Contacts</a>
                             </li>
 
@@ -77,6 +83,10 @@
                             <a class="nav-item nav-link" role="button" href="{{route('admin.posts.create')}}">
                               Create a new blog post  
                             </a>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('vue-post') }}">Vue Posts</a>
+                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('contacts.form') }}">Contacts</a>
@@ -117,5 +127,7 @@
             @yield('content')
         </main>
     </div>
+
+    @yield('footer-scripts')
 </body>
 </html>

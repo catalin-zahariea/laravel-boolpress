@@ -30,9 +30,7 @@ Route::prefix('contacts')
         Route::get('/new-contact-greeting', 'HomeController@newContactGreeting')->name('new-contact-greeting');
     });
 
-// Route::get('/contacts', 'HomeController@contacts')->name('contacts');
-// Route::get('/new-contact', 'HomeController@newContact')->name('new-contact');
-// Route::get('/new-contact-greeting', 'HomeController@newContactGreeting')->name('new-contact-greeting');
+Route::get('/vue-posts', 'PostController@vuePosts')->name('vue-post');
 
 Route::get('/posts', 'PostController@index')->name('guest.index');
 
